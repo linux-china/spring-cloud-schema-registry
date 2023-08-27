@@ -28,6 +28,7 @@ import org.springframework.cloud.schema.registry.controllers.ServerController;
 import org.springframework.cloud.schema.registry.model.Schema;
 import org.springframework.cloud.schema.registry.repository.SchemaRepository;
 import org.springframework.cloud.schema.registry.support.AvroSchemaValidator;
+import org.springframework.cloud.schema.registry.support.JsonSchemaValidator;
 import org.springframework.cloud.schema.registry.support.SchemaValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,6 +59,7 @@ public class SchemaServerConfiguration {
 	public Map<String, SchemaValidator> schemaValidators() {
 		Map<String, SchemaValidator> validatorMap = new HashMap<>();
 		validatorMap.put("avro", new AvroSchemaValidator());
+		validatorMap.put("json", new JsonSchemaValidator());
 		return validatorMap;
 	}
 
