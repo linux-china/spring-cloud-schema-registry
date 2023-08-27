@@ -1,5 +1,6 @@
 package org.springframework.cloud.schema.registry.support;
 
+import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
 import org.springframework.cloud.schema.registry.model.Compatibility;
@@ -35,8 +36,10 @@ public class JsonSchemaValidator implements SchemaValidator {
     @Override
     public Schema match(List<Schema> schemas, String definition) {
         Schema result = null;
+        final JsonSchema source = jsonSchemaFactory.getSchema(definition);
         for (Schema s : schemas) {
-            if (s.getDefinition().equals(definition)) {
+            JsonSchema target = jsonSchemaFactory.getSchema(s.getDefinition());
+            if (target.toString().equals(source.toString())) {
                 result = s;
                 break;
             }
