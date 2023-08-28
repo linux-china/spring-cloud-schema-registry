@@ -19,4 +19,6 @@ public interface ProtobufSchemaServiceManager {
 
     Proto getSchema(Class<? extends GeneratedMessageV3> clazz) throws SchemaNotFoundException;
 
+    <T> T readData(Class<? extends GeneratedMessageV3> targetClass, byte[] payload) throws SchemaNotFoundException, IOException, IllegalArgumentException;
+
 }

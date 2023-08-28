@@ -14,6 +14,7 @@ import org.springframework.cloud.schema.registry.SchemaReference;
 import org.springframework.cloud.schema.registry.client.SchemaRegistryClient;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Collections;
 
 /**
@@ -58,6 +59,17 @@ public class ProtobufSchemaServiceManagerImpl implements ProtobufSchemaServiceMa
             throw new SchemaNotFoundException("Schema not found for " + clazz);
         } else {
             return (Proto) valueWrapper.get();
+        }
+    }
+
+    @Override
+    public <T> T readData(Class<? extends GeneratedMessageV3> targetClass, byte[] payload) throws SchemaNotFoundException, IOException, IllegalArgumentException {
+        try {
+            Method method = targetClass.getMethod("parseFrom", byte[].class);
+            //noinspection unchecked
+            return (T) method.invoke(null, new Object[]{payload});
+        } catch (Exception e) {
+            throw new IOException("Failed to read data for " + targetClass, e);
         }
     }
 
