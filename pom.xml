@@ -29,6 +29,7 @@
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
         <avro.version>1.11.2</avro.version>
         <json-schema-validator.version>1.0.86</json-schema-validator.version>
+        <protobuf.version>3.24.2</protobuf.version>
         <h2.version>1.4.192</h2.version>
         <jackson-bom.version>2.11.0</jackson-bom.version>
     </properties>
@@ -63,6 +64,16 @@
                         <artifactId>commons-lang3</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protobuf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-parser</artifactId>
+                <version>2.2.27</version>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
