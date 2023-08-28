@@ -29,6 +29,7 @@ import org.springframework.cloud.schema.registry.model.Schema;
 import org.springframework.cloud.schema.registry.repository.SchemaRepository;
 import org.springframework.cloud.schema.registry.support.AvroSchemaValidator;
 import org.springframework.cloud.schema.registry.support.JsonSchemaValidator;
+import org.springframework.cloud.schema.registry.support.ProtobufSchemaValidator;
 import org.springframework.cloud.schema.registry.support.SchemaValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,22 +46,23 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Import(ServerController.class)
 public class SchemaServerConfiguration {
 
-	@Bean
-	public static BeanFactoryPostProcessor entityScanPackagesPostProcessor() {
-		return beanFactory -> {
-			if (beanFactory instanceof BeanDefinitionRegistry) {
-				EntityScanPackages.register((BeanDefinitionRegistry) beanFactory,
-						Collections.singletonList(Schema.class.getPackage().getName()));
-			}
-		};
-	}
+    @Bean
+    public static BeanFactoryPostProcessor entityScanPackagesPostProcessor() {
+        return beanFactory -> {
+            if (beanFactory instanceof BeanDefinitionRegistry) {
+                EntityScanPackages.register((BeanDefinitionRegistry) beanFactory,
+                        Collections.singletonList(Schema.class.getPackage().getName()));
+            }
+        };
+    }
 
-	@Bean
-	public Map<String, SchemaValidator> schemaValidators() {
-		Map<String, SchemaValidator> validatorMap = new HashMap<>();
-		validatorMap.put("avro", new AvroSchemaValidator());
-		validatorMap.put("json", new JsonSchemaValidator());
-		return validatorMap;
-	}
+    @Bean
+    public Map<String, SchemaValidator> schemaValidators() {
+        Map<String, SchemaValidator> validatorMap = new HashMap<>();
+        validatorMap.put("avro", new AvroSchemaValidator());
+        validatorMap.put("json", new JsonSchemaValidator());
+        validatorMap.put("proto", new ProtobufSchemaValidator());
+        return validatorMap;
+    }
 
 }
